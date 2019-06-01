@@ -5,7 +5,7 @@ import avatar from 'theme/assets/lisa.png';
 import moment from 'moment';
 import Styles from './styles.m.css';
 
-const Composer = () => {
+export const Post = () => {
     return (
         <section className = { Styles.post }>
             <img src = { avatar } />
@@ -16,4 +16,3 @@ const Composer = () => {
     );
 };
 
-export default Composer;

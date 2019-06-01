@@ -4,7 +4,7 @@ import React from 'react';
 import avatar from 'theme/assets/lisa.png';
 import Styles from './styles.m.css';
 
-const Post = () => {
+export const Composer = () => {
     return (
         <section className = { Styles.composer }>
             <img src = { avatar } />
@@ -18,5 +18,3 @@ const Post = () => {
         </section>
     );
 };
-
-export default Post;
