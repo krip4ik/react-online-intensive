@@ -1,21 +1,15 @@
-import React, { Component } from 'react';
+import React from 'react';
 
-import Composer from 'components/Composer';
-import Post from 'components/Post';
-import StatusBar from 'components/StatusBar';
+import * as Components from 'components';
 
 import Styles from './styles.m.css';
 
-class Feed extends Component {
-    render() {
-        return (
-            <section className = { Styles.feed }>
-                <StatusBar/>
-                <Composer />
-                <Post/>
-            </section>
-        );
-    }
-}
-
-export default Feed;
+export const Feed = () => {
+    return (
+        <section className = { Styles.feed }>
+            <Components.StatusBar />
+            <Components.Composer />
+            <Components.Post />
+        </section>
+    );
+};
