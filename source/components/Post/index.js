@@ -1,11 +1,11 @@
 import React from 'react';
 
 //Instruments
-import avatar from '../../theme/assets/lisa.png';
+import avatar from 'theme/assets/lisa.png';
 import moment from 'moment';
 import Styles from './styles.m.css';
 
-export const Post = () => {
+const Composer = () => {
     return (
         <section className = { Styles.post }>
             <img src = { avatar } />
@@ -15,3 +15,5 @@ export const Post = () => {
         </section>
     );
 };
+
+export default Composer;
