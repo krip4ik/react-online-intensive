@@ -1,15 +1,14 @@
 import React from 'react';
 
 //Instruments
-import avatar from 'theme/assets/lisa.png';
 import Styles from './styles.m.css';
 
-export const Composer = () => {
+export const Composer = (props) => {
     return (
         <section className = { Styles.composer }>
-            <img src = { avatar } />
+            <img src = { props.avatar } />
             <form>
-                <textarea placeholder = { 'What\'s on your mind Lisa?' } />
+                <textarea placeholder = { `What's on your mind ${props.currentUserFirstName}?` } />
                 <input
                     type = 'submit'
                     value = 'Post'
