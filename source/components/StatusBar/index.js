@@ -1,17 +1,22 @@
 import React from 'react';
+import { Consumer } from 'components/HOC/withProfile';
 
 import Styles from './styles.m.css';
 
-export const StatusBar = (props) => {
+export const StatusBar = () => {
     return (
-        <section className = { Styles.statusBar }>
-            <button>
-                <img src = { props.avatar } />
-                <span>{props.currentUserFirstName}</span>
-                &nbsp;
-                <span>{props.currentUserLastName}</span>
-            </button>
-        </section>
+        <Consumer>
+            {(context) => (
+                <section className = { Styles.statusBar }>
+                    <button>
+                        <img src = { context.avatar } />
+                        <span>{context.currentUserFirstName}</span>
+                        &nbsp;
+                        <span>{context.currentUserLastName}</span>
+                    </button>
+                </section>
+            )}
+        </Consumer>
     );
 };
 
