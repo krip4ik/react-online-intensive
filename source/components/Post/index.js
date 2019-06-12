@@ -5,7 +5,7 @@ import { Consumer } from 'components/HOC/withProfile';
 import moment from 'moment';
 import Styles from './styles.m.css';
 
-export const Post = () => {
+export const Post = (props) => {
     return (
         <Consumer>
             {
@@ -13,8 +13,8 @@ export const Post = () => {
                     <section className = { Styles.post }>
                         <img src = { context.avatar } />
                         <a>{`${context.currentUserFirstName} ${context.currentUserLastName}`}</a>
-                        <time>{moment().format('MMMM D hh:mm:ss a')}</time>
-                        <p>Howdy!</p>
+                        <time>{moment.unix(props.created).format('MMMM D hh:mm:ss a')}</time>
+                        <p>{props.comment}</p>
                     </section>
                 )
             }
