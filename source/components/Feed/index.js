@@ -1,5 +1,6 @@
 /* eslint-disable react/no-unused-state */
 import React, { Component } from 'react';
+import { withProfile } from 'components/HOC/withProfile';
 
 import * as Components from 'components';
 import { getUniqueID, delay } from '../../instruments/index';
@@ -7,15 +8,8 @@ import moment from 'moment';
 import { Spinner } from '../Spinner/Spinner';
 import Styles from './styles.m.css';
 
+@withProfile
 export class Feed extends Component {
-    constructor() {
-        super();
-        this._createPost = this._createPost.bind(this);
-        this._setPostsFetchingState = this._setPostsFetchingState.bind(this);
-        this._likePost = this._likePost.bind(this);
-        this._onDeletePostHandler = this._onDeletePostHandler.bind(this);
-    }
-
     state = {
         posts: [
             { id: 'wedwefdwsc', created: 1560310675, comment: 'Hey there!', likes: [] },
@@ -24,13 +18,13 @@ export class Feed extends Component {
         isPostsFetching: false,
     }
 
-    _setPostsFetchingState(state) {
+    _setPostsFetchingState = (state) => {
         this.setState({
             isPostsFetching: state,
         });
     }
 
-    async _createPost(comment) {
+    _createPost = async (comment) => {
         this._setPostsFetchingState(true);
         const post = {
             id:      getUniqueID(),
@@ -47,37 +41,37 @@ export class Feed extends Component {
         }));
     }
 
-    async _likePost(id) {
-        const { currentUserFirstName, currentUserLastName } = this.props;
+     _likePost = async (id) => {
+         const { currentUserFirstName, currentUserLastName } = this.props;
 
-        this._setPostsFetchingState(true);
+         this._setPostsFetchingState(true);
 
-        await delay(1200);
+         await delay(1200);
 
-        const newPosts = this.state.posts.map((post) => {
-            if (post.id === id) {
-                return {
-                    ...post,
-                    likes: [
-                        {
-                            id:        getUniqueID(),
-                            firstName: currentUserFirstName,
-                            lastName:  currentUserLastName,
-                        },
-                    ],
-                };
-            }
+         const newPosts = this.state.posts.map((post) => {
+             if (post.id === id) {
+                 return {
+                     ...post,
+                     likes: [
+                         {
+                             id:        getUniqueID(),
+                             firstName: currentUserFirstName,
+                             lastName:  currentUserLastName,
+                         },
+                     ],
+                 };
+             }
 
-            return post;
-        });
+             return post;
+         });
 
-        this.setState({
-            posts:           newPosts,
-            isPostsFetching: false,
-        });
-    }
+         this.setState({
+             posts:           newPosts,
+             isPostsFetching: false,
+         });
+     }
 
-    async _onDeletePostHandler(id) {
+    _onDeletePostHandler = async (id) => {
         this._setPostsFetchingState(true);
 
         await delay(1200);
