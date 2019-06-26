@@ -1,13 +1,19 @@
 /* eslint-disable react/no-unused-state */
 import React, { Component } from 'react';
+import { Transition } from 'react-transition-group';
+import { fromTo } from 'gsap';
+
 import { withProfile } from 'components/HOC/withProfile';
 
 import * as Components from 'components';
 import { api, TOKEN, GROUP_ID } from 'config/api';
 import { socket } from 'socket/init';
 
-import { Spinner } from '../Spinner/Spinner';
+import { Spinner } from '../Spinner';
+import Postman from '../Postman/';
+
 import Styles from './styles.m.css';
+
 
 @withProfile
 export class Feed extends Component {
@@ -140,6 +146,18 @@ export class Feed extends Component {
         }));
     }
 
+    _animateComposerEnter = (composer) => {
+        fromTo(composer, 1, { opacity: 0}, { opacity: 1});
+    };
+
+    _animatePostmanEnter = (postman) => {
+        fromTo(postman, 1, { opacity: 0, x: 350}, { opacity: 1, x: 0});
+    };
+
+    _animatePostmanEntered = (postman) => {
+        fromTo(postman, 1, { opacity: 1, x: 0}, { opacity: 0, x: -350});
+    };
+
     render() {
         const { posts, isPostsFetching } = this.state;
 
@@ -160,7 +178,21 @@ export class Feed extends Component {
             <section className = { Styles.feed }>
                 <Spinner isSpinning = { isPostsFetching } />
                 <Components.StatusBar />
-                <Components.Composer _createPost = { this._createPost } />
+                <Transition
+                    appear
+                    in
+                    timeout = { 1000 } //how long we are being on phase entering
+                    onEnter = { this._animateComposerEnter }>
+                    <Components.Composer _createPost = { this._createPost } />
+                </Transition>
+                <Transition
+                    appear
+                    in
+                    timeout = { 4000 }
+                    onEnter = { this._animatePostmanEnter }
+                    onEntered = { this._animatePostmanEntered } >
+                    <Postman />
+                </Transition>
                 {postsJSX}
             </section>
         );
