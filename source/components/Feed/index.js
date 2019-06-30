@@ -1,6 +1,6 @@
 /* eslint-disable react/no-unused-state */
 import React, { Component } from 'react';
-import { Transition } from 'react-transition-group';
+import { Transition, CSSTransition, TransitionGroup } from 'react-transition-group';
 import { fromTo } from 'gsap';
 
 import { withProfile } from 'components/HOC/withProfile';
@@ -163,14 +163,27 @@ export class Feed extends Component {
 
         const postsJSX = posts.map((post) => {
             return (
-                <Components.Catcher>
-                    <Components.Post
-                        _likePost = { this._likePost }
-                        key = { post.id }
-                        onDeletePost = { this._onDeletePostHandler }
-                        { ...post }
-                    />
-                </Components.Catcher>
+                <CSSTransition
+                    classNames = {{
+                        enter:       Styles.postInStart,
+                        enterActive: Styles.postInEnd,
+                        exit:        Styles.postOutStart,
+                        exitActive:  Styles.postOutEnd,
+                    }}
+                    key = { post.id }
+                    timeout = {{
+                        enter: 500,
+                        exit:  400,
+                    }}>
+                    <Components.Catcher>
+                        <Components.Post
+                            _likePost = { this._likePost }
+                            key = { post.id }
+                            onDeletePost = { this._onDeletePostHandler }
+                            { ...post }
+                        />
+                    </Components.Catcher>
+                </CSSTransition>
             );
         });
 
@@ -193,7 +206,7 @@ export class Feed extends Component {
                     onEntered = { this._animatePostmanEntered } >
                     <Postman />
                 </Transition>
-                {postsJSX}
+                <TransitionGroup>{postsJSX}</TransitionGroup>
             </section>
         );
     }
